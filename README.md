@@ -14,4 +14,4 @@ It is suggested to play the original game first or at least familiarize yourself
 
 # Compatibility
 
-This Final Fantasy Adventure randomizer is compatible with the NA rom file (MD5: 24CD3BDF490EF2E1AA6A8AF380ECCD78).
+This Final Fantasy Adventure randomizer is compatible with the NA rom file. (MD5: 24CD3BDF490EF2E1AA6A8AF380ECCD78)
