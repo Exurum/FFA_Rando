@@ -8,10 +8,10 @@ Steps will need to be taken to make the game randomizer compatible.
 
 It is suggested to play the original game first or at least familiarize yourself with the game before playing the randomizer.
 
-#Discord
+# Discord
 
 *Edit with Discord link at a later date*
 
-#Compatibility
+# Compatibility
 
 This Final Fantasy Adventure randomizer is compatible with the NA rom file (MD5: 24CD3BDF490EF2E1AA6A8AF380ECCD78).
