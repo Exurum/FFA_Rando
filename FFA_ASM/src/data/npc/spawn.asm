@@ -21,12 +21,12 @@ NPCSpawnPointers:
     dw   data_03_7572, data_03_757a, data_03_7582      ;; 03:7190 ??????
     dw   data_03_758a, data_03_758a, data_03_7592      ;; 03:7196 ??????
     dw   data_03_758a, data_03_759a, data_03_75a2      ;; 03:719c ??????
-    dw   data_03_758a, data_03_75b2, data_03_75ba      ;; 03:71a2 ??????
+    dw   data_03_758a, data_03_75b2, gargoyle      ;; 03:71a2 ??????
     dw   data_03_74a8, data_03_74a8, data_03_75aa      ;; 03:71a8 ??????
     dw   data_03_75c2, data_03_75ca, data_03_7528      ;; 03:71ae ??????
     dw   data_03_75d2, data_03_75da, data_03_7528      ;; 03:71b4 ??????
-    dw   data_03_75e2, data_03_75ea, data_03_75ba      ;; 03:71ba ??????
-    dw   data_03_75e2, data_03_75e2, data_03_750e      ;; 03:71c0 ??????
+    dw   phantasm, minotaur_x1, gargoyle      ;; 03:71ba ??????
+    dw   phantasm, phantasm, data_03_750e      ;; 03:71c0 ??????
     dw   data_03_74f0, data_03_75f2, data_03_75fa      ;; 03:71c6 ??????
     dw   data_03_7602, data_03_760c, data_03_760c      ;; 03:71cc ??????
     dw   data_03_7616, data_03_761e, data_03_7626      ;; 03:71d2 ??????
@@ -35,11 +35,11 @@ NPCSpawnPointers:
     dw   data_03_7656, data_03_765e, data_03_763e      ;; 03:71e4 ??????
     dw   data_03_7666, data_03_766e, data_03_7520      ;; 03:71ea ??????
     dw   data_03_7676, data_03_766e, data_03_7520      ;; 03:71f0 ??????
-    dw   data_03_767e, data_03_7686, data_03_75ba      ;; 03:71f6 ??????
-    dw   data_03_768e, data_03_7696, data_03_769e      ;; 03:71fc ??????
+    dw   data_03_767e, data_03_7686, gargoyle      ;; 03:71f6 ??????
+    dw   denden, doppelmirror, guardian      ;; 03:71fc ??????
     dw   data_03_7504, data_03_76a6, data_03_76ae      ;; 03:7202 ??????
-    dw   data_03_76b6, data_03_76be, data_03_769e      ;; 03:7208 ??????
-    dw   data_03_76c6, data_03_76ce, data_03_769e      ;; 03:720e ??????
+    dw   garasha, wonder, guardian      ;; 03:7208 ??????
+    dw   mammoth, ninja, guardian      ;; 03:720e ??????
     dw   data_03_76e0, data_03_76e0, data_03_76d6      ;; 03:7214 ??????
     dw   data_03_7738, data_03_7738, data_03_76e8      ;; 03:721a ......
     dw   data_03_7892, data_03_7892, data_03_7756      ;; 03:7220 ......
@@ -110,7 +110,7 @@ NPCSpawnPointers:
     dw   data_03_73ee, data_03_73ee, data_03_73ee      ;; 03:73a6 ??????
     dw   data_03_73e4, data_03_7844, data_03_7844      ;; 03:73ac ??????
     dw   data_03_7ac0, data_03_73da, data_03_73da      ;; 03:73b2 ??????
-    dw   data_03_7420, data_03_7420, data_03_7420      ;; 03:73b8 ??????
+    dw   minotaur_x2, minotaur_x2, minotaur_x2      ;; 03:73b8 ??????
     dw   data_03_73d0, data_03_73d0, data_03_73d0      ;; 03:73be ??????
     dw   data_03_77ae, data_03_77ae, data_03_77ae      ;; 03:73c4 ??????
     dw   data_03_7724, data_03_7724, data_03_7724      ;; 03:73ca ??????
@@ -149,7 +149,7 @@ data_03_7416:
     db   1, 1, NPC_INV_CURE, NPC_INV_CURE, NPC_INV_CURE, NPC_INV_CURE ;; 03:7416 ??????
     db   $09, $0a, $80, $80                            ;; 03:741c ????
 
-data_03_7420:
+minotaur_x2:
     db   2, 2, NPC_MINOTAUR, NPC_MINOTAUR, NPC_MINOTAUR, NPC_MINOTAUR ;; 03:7420 ??????
     db   $0c, $0c, $06, $0c, $80, $80                  ;; 03:7426 ??????
 
@@ -345,7 +345,7 @@ data_03_75b2:
     db   1, 1, NPC_FLAME, NPC_FLAME, NPC_FLAME, NPC_FLAME ;; 03:75b2 ??????
     db   $80, $80                                      ;; 03:75b8 ??
 
-data_03_75ba:
+gargoyle:
     db   1, 2, NPC_GARGOYLE, NPC_GARGOYLE, NPC_GARGOYLE, NPC_GARGOYLE ;; 03:75ba ??????
     db   $80, $80                                      ;; 03:75c0 ??
 
@@ -365,11 +365,11 @@ data_03_75da:
     db   1, 2, NPC_BARNACLEJACK, NPC_BARNACLEJACK, NPC_BARNACLEJACK, NPC_BARNACLEJACK ;; 03:75da ??????
     db   $80, $80                                      ;; 03:75e0 ??
 
-data_03_75e2:
+phantasm:
     db   1, 2, NPC_PHANTASM, NPC_PHANTASM, NPC_PHANTASM, NPC_PHANTASM ;; 03:75e2 ??????
     db   $80, $80                                      ;; 03:75e8 ??
 
-data_03_75ea:
+minotaur_x1:
     db   1, 1, NPC_MINOTAUR, NPC_MINOTAUR, NPC_MINOTAUR, NPC_MINOTAUR ;; 03:75ea ??????
     db   $80, $80                                      ;; 03:75f0 ??
 
@@ -449,15 +449,15 @@ data_03_7686:
     db   1, 3, NPC_EARTH_DIGGER, NPC_EARTH_DIGGER, NPC_EARTH_DIGGER, NPC_EARTH_DIGGER ;; 03:7686 ??????
     db   $80, $80                                      ;; 03:768c ??
 
-data_03_768e:
+denden:
     db   1, 3, NPC_DENDEN_SNAIL, NPC_DENDEN_SNAIL, NPC_DENDEN_SNAIL, NPC_DENDEN_SNAIL ;; 03:768e ??????
     db   $80, $80                                      ;; 03:7694 ??
 
-data_03_7696:
+doppelmirror:
     db   1, 2, NPC_DOPPEL_MIRROR, NPC_DOPPEL_MIRROR, NPC_DOPPEL_MIRROR, NPC_DOPPEL_MIRROR ;; 03:7696 ??????
     db   $80, $80                                      ;; 03:769c ??
 
-data_03_769e:
+guardian:
     db   1, 3, NPC_GUARDIAN, NPC_GUARDIAN, NPC_GUARDIAN, NPC_GUARDIAN ;; 03:769e ??????
     db   $80, $80                                      ;; 03:76a4 ??
 
@@ -469,19 +469,19 @@ data_03_76ae:
     db   1, 2, NPC_GAUNTLET, NPC_GAUNTLET, NPC_GAUNTLET, NPC_GAUNTLET ;; 03:76ae ??????
     db   $80, $80                                      ;; 03:76b4 ??
 
-data_03_76b6:
+garasha:
     db   1, 2, NPC_GARASHA_DUCK, NPC_GARASHA_DUCK, NPC_GARASHA_DUCK, NPC_GARASHA_DUCK ;; 03:76b6 ??????
     db   $80, $80                                      ;; 03:76bc ??
 
-data_03_76be:
+wonder:
     db   1, 2, NPC_FUZZY_WONDER, NPC_FUZZY_WONDER, NPC_FUZZY_WONDER, NPC_FUZZY_WONDER ;; 03:76be ??????
     db   $80, $80                                      ;; 03:76c4 ??
 
-data_03_76c6:
+mammoth:
     db   1, 2, NPC_ELEPHANT, NPC_ELEPHANT, NPC_ELEPHANT, NPC_ELEPHANT ;; 03:76c6 ??????
     db   $80, $80                                      ;; 03:76cc ??
 
-data_03_76ce:
+ninja:
     db   1, 2, NPC_NINJA, NPC_NINJA, NPC_NINJA, NPC_NINJA ;; 03:76ce ??????
     db   $80, $80                                      ;; 03:76d4 ??
 
