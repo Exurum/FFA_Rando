@@ -39,7 +39,7 @@ entryPointTableBank02:
     call_to_bank_target removeItemFromInventory        ;; 02:4036 ??
     call_to_bank_target removeEquipmentFromInventory   ;; 02:4038 ??
     call_to_bank_target removeMagicFromInventory       ;; 02:403a ??
-    call_to_bank_target getEquippedArmorElementalResistances_Dup ;; 02:403c pP
+    call_to_bank_target getEquippedHelmElementalResistances ;; 02:403c pP
     call_to_bank_target getEquippedShieldBlockElements ;; 02:403e pP
     call_to_bank_target getEquippedWeaponBonusTypes    ;; 02:4040 pP
     call_to_bank_target getSpellOrBookPower            ;; 02:4042 ??
@@ -5598,9 +5598,10 @@ getEquippedArmorElementalResistances:
     jr   getEquipmentAOffset0c                         ;; 02:6dd6 $18 $13
 
 ; Probably intended to fetch for helmets
-getEquippedArmorElementalResistances_Dup:
+; Probably intended to fetch for helmets. Now changed to actually check helmets.
+getEquippedHelmElementalResistances:
     push HL                                            ;; 02:6dd8 $e5
-    ld   A, [wEquippedArmor]                           ;; 02:6dd9 $fa $ec $d6
+    ld   A, [wEquippedHelm]                           ;; 02:6dd9 $fa $ec $d6
     jr   getEquipmentAOffset0c                         ;; 02:6ddc $18 $0d
 
 getEquippedShieldBlockElements:
@@ -6448,6 +6449,8 @@ loadSRAMInitGame:
     dec  B                                             ;; 02:7352 $05
     jr   NZ, .loop_magic                               ;; 02:7353 $20 $f3
 ; Init equipment powers from equipment inventory.
+; This originally had a bug with empty slots before the last item that caused the Iron Helmet exploit used by speedrunners.
+; It could also easily cause a major nerf for unsuspecting players.
     ld   HL, wEquipmentInventory                       ;; 02:7355 $21 $dd $d6
     ld   DE, wEquipmentInventoryPowers                 ;; 02:7358 $11 $b3 $d6
     ld   B, $0c                                        ;; 02:735b $06 $0c
@@ -6455,29 +6458,31 @@ loadSRAMInitGame:
     push BC                                            ;; 02:735d $c5
     ld   A, [HL]                                       ;; 02:735e $7e
     call getItemFlags1And2                             ;; 02:735f $cd $9c $56
-    ld   A, B                                          ;; 02:7362 $78
     inc  C                                             ;; 02:7363 $0c
     jr   Z, .equipment_next                            ;; 02:7364 $28 $15
-    ld   A, [HL+]                                      ;; 02:7366 $2a
-    and  A, $7f                                        ;; 02:7367 $e6 $7f
+    ld a, [h1]
     push HL                                            ;; 02:7369 $e5
     ld   HL, equipmentDataTable + $0c                  ;; 02:736a $21 $f6 $61
     call indexIntoTable                                ;; 02:736d $cd $82 $76
-    ld   A, B                                          ;; 02:7370 $78
-    cp   A, $11                                        ;; 02:7371 $fe $11
-    jr   NZ, .equipment_set_power                      ;; 02:7373 $20 $04
-    ld   A, [HL]                                       ;; 02:7375 $7e
-    pop  HL                                            ;; 02:7376 $e1
-    jr   .equipment_next                               ;; 02:7377 $18 $02
-.equipment_set_power:
     ld   A, [HL]                                       ;; 02:7379 $7e
     pop  HL                                            ;; 02:737a $e1
-.equipment_next:
     ld   [DE], A                                       ;; 02:737b $12
+.equipment_next
+    inc hl
     inc  DE                                            ;; 02:737c $13
     pop  BC                                            ;; 02:737d $c1
     dec  B                                             ;; 02:737e $05
     jr   NZ, .loop_equipment                           ;; 02:737f $20 $dc
+; Free space from the above fix:
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+
     ld   HL, wStatusScreenAPDP                         ;; 02:7381 $21 $dd $d7
     ld   A, $81                                        ;; 02:7384 $3e $81
     ld   [HL+], A                                      ;; 02:7386 $22
