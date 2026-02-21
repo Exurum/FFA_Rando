@@ -8,9 +8,17 @@ Steps will need to be taken to make the game randomizer compatible.
 
 It is suggested to play the original game first or at least familiarize yourself with the game before playing the randomizer.
 
-# Discord
+# Randomizer Discord
 
 *Edit with Discord link at a later date*
+
+# General Thanks
+
+A majority of QoL imporvements and fixes have come from: https://github.com/xenophile127/Legend-of-the-Mana-Sword
+
+Credit goes to those that have helped on other projects in the Final Fantasy Adventure community.
+
+Mystic Editor Community Discord: https://discord.gg/mdTDMKh5FR
 
 # Compatibility
 
