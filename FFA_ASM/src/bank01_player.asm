@@ -4126,14 +4126,14 @@ useSpecialAttack:
 ; E = newly pressed buttons, except bit 7 indicates special attack (instead of Start button)
 useWeaponItemOrSpecial:
     call getPlayerDirection                            ;; 01:5a95 $cd $ab $02
-    bit  0, A                                          ;; 01:5a98 $cb $47
-    jr   NZ, .playerFacingEast                         ;; 01:5a9a $20 $0f
-    bit  1, A                                          ;; 01:5a9c $cb $4f
-    jr   NZ, .playerFacingWest                         ;; 01:5a9e $20 $25
-    bit  2, A                                          ;; 01:5aa0 $cb $57
-    jr   NZ, .playerFacingNorth                        ;; 01:5aa2 $20 $3b
-    bit  3, A                                          ;; 01:5aa4 $cb $5f
-    jp   NZ, .playerFacingSouth                        ;; 01:5aa6 $c2 $f9 $5a
+    rra
+    jr c, .playerFacingEast
+    rra
+    jr c, .playerFacingWest
+    rra
+    jr c, .playerFacingNorth
+    rra
+    jr c, .playerFacingSouth
     pop  DE                                            ;; 01:5aa9 $d1
     ret                                                ;; 01:5aaa $c9
 .playerFacingEast:
@@ -4216,9 +4216,12 @@ useWeaponItemOrSpecial:
 .attack_common:
     pop  BC                                            ;; 01:5b2f $c1
     call playerUseWeaponOrItem                         ;; 01:5b30 $cd $6d $5b
+; Zero flag indicates an item with no animation, such as a key.
+    jr z, .after_write
     ld   HL, wAttackFrameFunctions                     ;; 01:5b33 $21 $f0 $ce
     add  HL, BC                                        ;; 01:5b36 $09
     ld   [HL], $01                                     ;; 01:5b37 $36 $01
+.after_write
     ld   B, A                                          ;; 01:5b39 $47
     ld   C, $00                                        ;; 01:5b3a $0e $00
     call attackObjectFunctionNormal                    ;; 01:5b3c $cd $d5 $54
@@ -4229,6 +4232,8 @@ useWeaponItemOrSpecial:
     pop  BC                                            ;; 01:5b43 $c1
     xor  A, A                                          ;; 01:5b44 $af
     ret                                                ;; 01:5b45 $c9
+
+ds 3 ; Free space
 
 call_01_5b46:
     ld   A, [wPlayerAttackAnimationFrame]              ;; 01:5b46 $fa $5f $cf
@@ -4256,7 +4261,9 @@ call_01_5b46:
 
 ; A = type and step. Type is in the low nibble, step is in the high.
 ; C = special or normal, moving or still, and facing
-; Returns: A = 7 - object id, BC = object id
+; Return: a = 7 - object id
+; Return: bc = object id
+; Return: nz = has animation, z = no animation
 playerUseWeaponOrItem:
     ld   [wPlayerAttackAnimationFrame], A              ;; 01:5b6d $ea $5f $cf
     add  A, A                                          ;; 01:5b70 $87
@@ -4320,9 +4327,11 @@ playerUseWeaponOrItem:
     ld   A, [HL]                                       ;; 01:5bc0 $7e
     ld   HL, playerAttackFirstMetaspriteTable          ;; 01:5bc1 $21 $99 $2e
     cp   A, $02                                        ;; 01:5bc4 $fe $02
-    jr   Z, .jr_01_5bcb                                ;; 01:5bc6 $28 $03
+    jr   Z, .set_metasprite                                ;; 01:5bc6 $28 $03
+; Ice (and related items) uses a separate metasprite table using OBP1.
+; This causes it to be blue under boot rom auto colorization.
     ld   HL, playerAttackSecondMetaspriteTable         ;; 01:5bc8 $21 $b1 $2e
-.jr_01_5bcb:
+.set_metasprite:
     pop  BC                                            ;; 01:5bcb $c1
     call setObjectMetaspritePointer                    ;; 01:5bcc $cd $ba $0c
     pop  HL                                            ;; 01:5bcf $e1
@@ -4331,11 +4340,9 @@ playerUseWeaponOrItem:
     ld   B, $00                                        ;; 01:5bd4 $06 $00
     add  HL, BC                                        ;; 01:5bd6 $09
     ld   A, [HL+]                                      ;; 01:5bd7 $2a
-    ld   H, [HL]                                       ;; 01:5bd8 $66
-    ld   L, A                                          ;; 01:5bd9 $6f
+    ld e, a
+    ld d, [hl]
     pop  BC                                            ;; 01:5bda $c1
-    ld   D, H                                          ;; 01:5bdb $54
-    ld   E, L                                          ;; 01:5bdc $5d
     ld   HL, wAttackFrameTypePointers                  ;; 01:5bdd $21 $18 $cf
     add  HL, BC                                        ;; 01:5be0 $09
     add  HL, BC                                        ;; 01:5be1 $09
@@ -4351,7 +4358,11 @@ playerUseWeaponOrItem:
     pop  BC                                            ;; 01:5bec $c1
     ld   A, $07                                        ;; 01:5bed $3e $07
     sub  A, C                                          ;; 01:5bef $91
+; Return nz on success.
+    inc h
     ret                                                ;; 01:5bf0 $c9
+
+ds 1 ; Free space
 
 attackObjectFunction07:
     push BC                                            ;; 01:5bf1 $c5
