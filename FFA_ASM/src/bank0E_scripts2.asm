@@ -2134,6 +2134,9 @@ script_03c9:
 script_03ca:
     sIF_TRIGGERED_ON_BY $c9, $c1                       ;; 0e:4ee3 $0b $c9 $c1 $00 $05
       sLOAD_ROOM 2, $62, 16, 2                         ;; 0e:4ee8 $f4 $02 $62 $10 $02
+; Show the stairs back to Ifrit's lair if you're backtracking.
+; It isn't perfect since if you backtrack further you'll need to re-solve the puzzle, but it's an improvement.
+      sSET_ROOM_TILE $02, 8, 1
     sENDIF                                             ;; 0e:4eed
     sEND                                               ;; 0e:4eed $00
 

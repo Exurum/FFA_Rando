@@ -2454,13 +2454,13 @@ script_01a6:
         sMSG                                           ;; 0d:4e7c $04
           db "<10>Lee:That's my\n victim!<12>"
           db "<11>", $00 ;; 0d:4e7d
+          sSPAWN_BOSS 0
         sSFX 20                                        ;; 0d:4e92 $f9 $14
         sFLASH_SCREEN                                  ;; 0d:4e94 $bf
         sFLASH_SCREEN                                  ;; 0d:4e95 $bf
         sFLASH_SCREEN                                  ;; 0d:4e96 $bf
         sDELAY 10                                      ;; 0d:4e97 $f0 $0a
         sSET_MUSIC 15                                  ;; 0d:4e99 $f8 $0f
-        sSPAWN_BOSS 0                                  ;; 0d:4e9b $fe $00
       sENDIF                                           ;; 0d:4e9d
     sENDIF                                             ;; 0d:4e9d
     sEND                                               ;; 0d:4e9d $00
