@@ -210,7 +210,7 @@ npcRunBehavior:
 .death_behavior:
     ld   A, $01                                        ;; 03:40fb $3e $01
     jr   .set_new_behavior                                   ;; 03:40fd $18 $be
-.set_new_behavior:
+.sliding:
     ld   A, $1b                                        ;; 03:40ff $3e $1b
     jr   .set_new_behavior                                   ;; 03:4101 $18 $ba
 .slep_or_mute:
