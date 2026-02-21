@@ -100,7 +100,7 @@ data_08_7300:
     INCBIN "attacks1.bin"                              ;; 08:7300
 
 ;@gfximg name=attacks2 width=14 height=1
-data_08_7360:
+gfxAttackSpear:
     INCBIN "attacks2.bin"                              ;; 08:7360
 
 ;@gfximg name=attack/mattok width=2 height=6
