@@ -3635,7 +3635,7 @@ bodyVampireCapeOpenRight:
     db   $00, $f0, $f0
     db   $ff
 
-bodyVampireCopeOpenFull_fire:
+bodyVampireCapeOpenFull_fire:
     db   $05, $00, $f0                                 ;; 04:6b9a
     db   $03, $f0, $00
     db   $04, $f0, $f0
