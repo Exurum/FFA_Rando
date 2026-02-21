@@ -6421,7 +6421,7 @@ jp_02_72be:
     call loadSRAMInitGame                              ;; 02:7315 $cd $22 $73
     call getEquippedWeaponElements                     ;; 02:7318 $cd $56 $71
     call getEquippedItemElements                       ;; 02:731b $cd $65 $71
-    call call_02_7421                                  ;; 02:731e $cd $21 $74
+    call loadGameFinish                                  ;; 02:731e $cd $21 $74
     ret                                                ;; 02:7321 $c9
 
 ; Inits most of the game related things. Creates a script to load the proper room, follower, and more.
@@ -6583,13 +6583,23 @@ nop
     ld   HL, $0b                                       ;; 02:73ff $21 $0b $00
     call runScriptByIndex                              ;; 02:7402 $cd $ad $31
     ret                                                ;; 02:7405 $c9
-.followerInitArgs:
-    db   $32, $01, $01, $4d, $00, $02, $4e, $02        ;; 02:7406 ????????
-    db   $03, $4f, $00, $04, $51, $00, $05, $41        ;; 02:740e ????????
-    db   $02, $06, $52, $00, $07, $65, $00, $08        ;; 02:7416 ????????
-    db   $50, $01, $09                                 ;; 02:741e ???
 
-call_02_7421:
+; Arguments for three script commands in order to initialize a follower:
+; 0: sSET_NPC_TYPES
+; 1: sSPAWN_NPC
+; 2: sGIVE_FOLLOWER
+.followerInitArgs:
+    db   $32, $01, $01 ; Fuji
+    db   $4d, $00, $02 ; Traveler (Man/Mysterious Man/Traveling Man)
+    db   $4e, $02, $03 ; Watts
+    db   $4f, $00, $04 ; Bogard
+    db   $51, $00, $05 ; Amanda (or Duke)
+    db   $41, $02, $06 ; Lester
+    db   $52, $00, $07 ; Marcie
+    db   $65, $00, $08 ; Chocobot
+    db   $50, $01, $09 ; Chocobo
+
+loadGameFinish:
     call NOOP_2                                        ;; 02:7421 $cd $ae $77
     ld   A, [wEquippedItem]                            ;; 02:7424 $fa $ef $d6
     ld   [wEquippedItemAndWeaponCopy], A               ;; 02:7427 $ea $f1 $d6
@@ -6597,11 +6607,16 @@ call_02_7421:
     dec  A                                             ;; 02:742c $3d
     call getEquippedItemAnimationType_trampoline       ;; 02:742d $cd $df $2e
     call hideAndSaveMenuMetasprites                    ;; 02:7430 $cd $51 $6b
-    call clearSaveLoadScreen                           ;; 02:7433 $cd $4c $56
+; These next two calls have been switched in order to prevent a brief visual glitch.
     call hideFullscreenWindow                          ;; 02:7436 $cd $27 $7a
+    call clearSaveLoadScreen                           ;; 02:7433 $cd $4c $56
     ld   B, $00                                        ;; 02:7439 $06 $00
     call setMenuStateCurrentFunction                   ;; 02:743b $cd $98 $6c
     ret                                                ;; 02:743e $c9
+
+ds 3 ; Free space
+
+SECTION "bank02_align_743f", ROMX[$743f], BANK[$02]
 
 ; Read a block of SRAM into memory pointing at DE
 readDEtimesBtoSRAM:
