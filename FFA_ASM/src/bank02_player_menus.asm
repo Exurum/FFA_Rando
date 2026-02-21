@@ -1584,7 +1584,7 @@ windowNamingEntryRubLetter:
     ld   [wSelectedMenuIndex2], A                      ;; 02:4ba4 $ea $4c $d8
     ld   A, [wNameEntryNameLength]                     ;; 02:4ba7 $fa $85 $d8
     and  A, A                                          ;; 02:4baa $a7
-    jr   Z, .jr_02_4bdf                                ;; 02:4bab $28 $32
+    jr   Z, .finished                                ;; 02:4bab $28 $32
     dec  A                                             ;; 02:4bad $3d
     push AF                                            ;; 02:4bae $f5
     ld   [wNameEntryNameLength], A                     ;; 02:4baf $ea $85 $d8
@@ -1597,7 +1597,7 @@ windowNamingEntryRubLetter:
     ld   [HL], A                                       ;; 02:4bbd $77
     ld   HL, windowData.namingScreenTop                ;; 02:4bbe $21 $cc $5c
     ld   A, $1d                                        ;; 02:4bc1 $3e $1d
-    call call_02_57c4                                  ;; 02:4bc3 $cd $c4 $57
+    call setActiveWindow                                  ;; 02:4bc3 $cd $c4 $57
     pop  AF                                            ;; 02:4bc6 $f1
     ld   DE, $108                                      ;; 02:4bc7 $11 $08 $01
     add  A, E                                          ;; 02:4bca $83
@@ -1609,8 +1609,8 @@ windowNamingEntryRubLetter:
     call storeTileAatDialogPositionDE                  ;; 02:4bd4 $cd $44 $38
     ld   HL, windowData.namingScreenBottom             ;; 02:4bd7 $21 $d6 $5c
     ld   A, $1e                                        ;; 02:4bda $3e $1e
-    call call_02_57c4                                  ;; 02:4bdc $cd $c4 $57
-.jr_02_4bdf:
+    call setActiveWindow                                  ;; 02:4bdc $cd $c4 $57
+.finished:
     ld   A, [wSelectedMenuIndex2]                      ;; 02:4bdf $fa $4c $d8
     ld   [wRegisterSave1.H], A                         ;; 02:4be2 $ea $a3 $d8
     ld   A, $03                                        ;; 02:4be5 $3e $03
@@ -1888,7 +1888,7 @@ call_02_4db0:
     add  HL, BC                                        ;; 02:4de3 $09
     ld   A, [HL]                                       ;; 02:4de4 $7e
     and  A, A                                          ;; 02:4de5 $a7
-    jr   Z, .jr_02_4df5                                ;; 02:4de6 $28 $0d
+    jr   Z, .cleanup                                ;; 02:4de6 $28 $0d
     push HL                                            ;; 02:4de8 $e5
     ld   BC, currentlyEquippedEquipmentList            ;; 02:4de9 $01 $6f $58
     call findSlotForEquipmentType                      ;; 02:4dec $cd $3c $58
@@ -1898,14 +1898,14 @@ call_02_4db0:
     ld   [HL], A                                       ;; 02:4df2 $77
     ld   A, B                                          ;; 02:4df3 $78
     ld   [DE], A                                       ;; 02:4df4 $12
-.jr_02_4df5:
+.cleanup:
     ld   A, [wMenuFlags]                               ;; 02:4df5 $fa $49 $d8
     ld   [wMenuFlagsBackup], A                         ;; 02:4df8 $ea $4e $d8
     ld   A, [wD848]                                    ;; 02:4dfb $fa $48 $d8
     ld   [wD84F], A                                    ;; 02:4dfe $ea $4f $d8
     ld   A, $03                                        ;; 02:4e01 $3e $03
     ld   HL, windowData.equipmentScreenTop             ;; 02:4e03 $21 $c8 $5b
-    call call_02_57c4                                  ;; 02:4e06 $cd $c4 $57
+    call setActiveWindow                                  ;; 02:4e06 $cd $c4 $57
     call windowInitContents                            ;; 02:4e09 $cd $93 $76
     call saveRegisterState2                            ;; 02:4e0c $cd $80 $6d
     ld   A, $14                                        ;; 02:4e0f $3e $14
@@ -2600,13 +2600,13 @@ windowNamingEntryAddLetter:
     ld   C, A                                          ;; 02:52d3 $4f
     ld   A, $1d                                        ;; 02:52d4 $3e $1d
     ld   HL, windowData.namingScreenTop                ;; 02:52d6 $21 $cc $5c
-    call call_02_57c4                                  ;; 02:52d9 $cd $c4 $57
+    call setActiveWindow                                  ;; 02:52d9 $cd $c4 $57
     ld   DE, $208                                      ;; 02:52dc $11 $08 $02
     ld   HL, wNameEntryNameLength                      ;; 02:52df $21 $85 $d8
     ld   A, [HL]                                       ;; 02:52e2 $7e
     inc  A                                             ;; 02:52e3 $3c
     cp   A, $05                                        ;; 02:52e4 $fe $05
-    jr   NC, .jr_02_5306                               ;; 02:52e6 $30 $1e
+    jr   NC, .finished                               ;; 02:52e6 $30 $1e
     ld   [HL], A                                       ;; 02:52e8 $77
     dec  A                                             ;; 02:52e9 $3d
     push AF                                            ;; 02:52ea $f5
@@ -2625,10 +2625,10 @@ windowNamingEntryAddLetter:
     ld   HL, wSRAMSaveHeader                           ;; 02:52fd $21 $a7 $d7
     ld   DE, $208                                      ;; 02:5300 $11 $08 $02
     call drawText                                      ;; 02:5303 $cd $77 $37
-.jr_02_5306:
+.finished:
     ld   A, $1e                                        ;; 02:5306 $3e $1e
     ld   HL, windowData.namingScreenBottom             ;; 02:5308 $21 $d6 $5c
-    call call_02_57c4                                  ;; 02:530b $cd $c4 $57
+    call setActiveWindow                                  ;; 02:530b $cd $c4 $57
     pop  HL                                            ;; 02:530e $e1
     pop  DE                                            ;; 02:530f $d1
     ld   A, [wSelectedMenuIndex2]                      ;; 02:5310 $fa $4c $d8
@@ -3427,11 +3427,14 @@ call_02_57b9:
     ld   A, $04                                        ;; 02:57b9 $3e $04
     push AF                                            ;; 02:57bb $f5
     ld   HL, windowData.equipmentScreenBottom          ;; 02:57bc $21 $d2 $5b
-    call call_02_57c4                                  ;; 02:57bf $cd $c4 $57
+    call setActiveWindow                                  ;; 02:57bf $cd $c4 $57
     pop  AF                                            ;; 02:57c2 $f1
     ret                                                ;; 02:57c3 $c9
 
-call_02_57c4:
+; Used when multiple windows are active to switch which one will be drawn to.
+; a = window number
+; hl = window data pointer
+setActiveWindow:
     push DE                                            ;; 02:57c4 $d5
     push BC                                            ;; 02:57c5 $c5
     ld   [wDialogType], A                              ;; 02:57c6 $ea $4a $d8
