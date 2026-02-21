@@ -6470,7 +6470,7 @@ loadSRAMInitGame:
     call getItemFlags1And2                             ;; 02:735f $cd $9c $56
     inc  C                                             ;; 02:7363 $0c
     jr   Z, .equipment_next                            ;; 02:7364 $28 $15
-    ld a, [h1]
+    ld a, [hl]
     push HL                                            ;; 02:7369 $e5
     ld   HL, equipmentDataTable + $0c                  ;; 02:736a $21 $f6 $61
     call indexIntoTable                                ;; 02:736d $cd $82 $76
