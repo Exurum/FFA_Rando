@@ -6,7 +6,7 @@ The goal of this project is to randomize the Game Boy game Final Fantays Adventu
 
 Steps will need to be taken to make the game randomizer compatible.
 
-It is suggested to play the original game first or at least familiarize yourself with the game before playing the randomizer.
+It is suggested to play the original game first or at least familiarize yourself with the game before playing the randomizer. A lot of the original game will not be altered. Some of the bugs that are present in the original will be present in the randomizer. Some things have been fixed to work correctly and for massive glitches harder to do in general. Since they were pretty easy to do in the original, some glitches could be done on accident and spoil the player's experience.
 
 # Randomizer Discord
 
